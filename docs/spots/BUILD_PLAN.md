@@ -1,6 +1,6 @@
 # SPOTS 2027 — Build Plan
 
-Version: 0.1.0
+Version: 0.2.0
 Last Updated: 2026-06-05
 
 Legend — Status: `todo` | `in-progress` | `done` | `blocked` · Owner: `Lovable` | `User` | `Both` · Tags: `[dep]` dependency-linked (sorted first), `[del]` deliverable (sorted last).
@@ -9,10 +9,10 @@ Legend — Status: `todo` | `in-progress` | `done` | `blocked` · Owner: `Lovabl
 
 ## Phase 1 — Data Model
 
-- [ ] **[dep]** Canonical schema document — `docs/spots/SCHEMA.md` · Owner: Lovable · Status: todo · QA: open file; every Access table maps to a Postgres table with type corrections noted (name coalescing, `sessionnumber` text, payment cols stripped).
-- [ ] **[dep]** Entity map — `docs/spots/ENTITIES.md` · Owner: Lovable · Status: todo · QA: open file; ASCII diagrams grouped by domain (Customer/Session/Image/Order/Tenant).
-- [ ] **[dep]** Reference DDL exported — `/mnt/documents/SPOTS2027_schema.sql` · Owner: Lovable · Status: done · QA: file exists, opens, contains all 114 mapped tables.
-- [x] **[del]** This Build Plan published in-repo — `docs/spots/BUILD_PLAN.md` · Owner: Lovable · Status: done · QA: file visible in GitHub repo after Lovable auto-sync.
+- [x] **[dep]** Canonical schema document — `docs/spots/SCHEMA.md` · Owner: Lovable · Status: done · QA: open file; every Access table maps to a Postgres table with type corrections noted (name coalescing, `sessionnumber` text, payment cols stripped).
+- [x] **[dep]** Entity map — `docs/spots/ENTITIES.md` · Owner: Lovable · Status: done · QA: open file; ASCII diagrams grouped by domain (Tenant / Customer-Session-Image / Orders / Scheduling / Pipeline / Lookups / Audit / Deferred).
+- [x] **[dep]** Reference DDL exported — `/mnt/documents/SPOTS2027_schema.sql` · Owner: Lovable · Status: done · QA: file exists, opens, contains all 114 mapped tables.
+- [x] **[del]** This Build Plan published in-repo + rendered at `/build-plan` · Owner: Lovable · Status: done · QA: file visible in GitHub repo (`tfpdotnyc/cs-spots-rebuild`) and live at `/build-plan` route.
 
 ## Phase 2 — VBA Reverse Engineering
 
@@ -80,3 +80,6 @@ Executed steps captured from chat history through 2026-06-05:
 9. 2026-06-05 — Blocker identified: VBA / Forms / Reports / Queries are not extractable from `.mdb` without Microsoft Access. Outcome: Phase 2 marked blocked-on-user.
 10. 2026-06-05 — Full Postgres DDL exported to `/mnt/documents/SPOTS2027_schema.sql`. Outcome: reference DDL committed as Phase 1 dependency.
 11. 2026-06-05 — Created this Build Plan + `build-plan-tracker` skill. Outcome: living QA artifact + repeatable process in place.
+12. 2026-06-05 — Connected GitHub repo `tfpdotnyc/cs-spots-rebuild` on `main`. Outcome: auto-sync of all repo files confirmed via Project Settings → Git.
+13. 2026-06-05 — Shipped in-app Build Plan page at `/build-plan` rendering `docs/spots/BUILD_PLAN.md` as single source of truth. Outcome: zero-drift visual QA surface.
+14. 2026-06-05 — Phase 1 deliverables published: `docs/spots/SCHEMA.md` v0.1.0 (114-table inventory, conventions, critical-table field mappings, open questions) and `docs/spots/ENTITIES.md` v0.1.0 (8 grouped ASCII diagrams). Outcome: Phase 1 closed; ready for Phase 2 (VBA reverse-engineering checklist) and Phase 3 (Lovable Cloud enable).
