@@ -1,6 +1,6 @@
 # SPOTS 2027 — Build Plan
 
-Version: 0.2.0
+Version: 0.3.0
 Last Updated: 2026-06-05
 
 Legend — Status: `todo` | `in-progress` | `done` | `blocked` · Owner: `Lovable` | `User` | `Both` · Tags: `[dep]` dependency-linked (sorted first), `[del]` deliverable (sorted last).
@@ -16,7 +16,7 @@ Legend — Status: `todo` | `in-progress` | `done` | `blocked` · Owner: `Lovabl
 
 ## Phase 2 — VBA Reverse Engineering
 
-- [ ] **[dep]** Extraction checklist — `docs/spots/VBA_REVERSE_ENGINEERING.md` · Owner: Lovable · Status: todo · QA: open file; steps for exporting `.bas/.cls/.frm`, queries, macros from Access on Windows are numbered and reproducible.
+- [x] **[dep]** Extraction checklist — `docs/spots/VBA_REVERSE_ENGINEERING.md` · Owner: Lovable · Status: done · QA: open file; steps for exporting `.bas/.cls/.frm`, queries, macros from Access on Windows are numbered and reproducible.
 - [ ] **[dep]** User exports VBA modules + uploads — Owner: User · Status: blocked · QA: zip received containing at least one `.bas` per module listed in the MDB inventory.
 - [ ] **[del]** Per-module logic summary — `docs/spots/vba/SUMMARY.md` · Owner: Lovable · Status: todo · QA: every module has Inputs / Outputs / Side-effects / Postgres-equivalent rows.
 
