@@ -83,3 +83,4 @@ Executed steps captured from chat history through 2026-06-05:
 12. 2026-06-05 — Connected GitHub repo `tfpdotnyc/cs-spots-rebuild` on `main`. Outcome: auto-sync of all repo files confirmed via Project Settings → Git.
 13. 2026-06-05 — Shipped in-app Build Plan page at `/build-plan` rendering `docs/spots/BUILD_PLAN.md` as single source of truth. Outcome: zero-drift visual QA surface.
 14. 2026-06-05 — Phase 1 deliverables published: `docs/spots/SCHEMA.md` v0.1.0 (114-table inventory, conventions, critical-table field mappings, open questions) and `docs/spots/ENTITIES.md` v0.1.0 (8 grouped ASCII diagrams). Outcome: Phase 1 closed; ready for Phase 2 (VBA reverse-engineering checklist) and Phase 3 (Lovable Cloud enable).
+15. 2026-06-05 — Workspace move + GitHub reconnect. Sync probe appended to verify `main` branch round-trip after re-authorization.
