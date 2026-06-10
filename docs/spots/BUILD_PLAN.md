@@ -1,7 +1,7 @@
 # SPOTS 2027 — Build Plan
 
-Version: 0.3.0
-Last Updated: 2026-06-05
+Version: 0.3.2
+Last Updated: 2026-06-10
 
 Legend — Status: `todo` | `in-progress` | `done` | `blocked` · Owner: `Lovable` | `User` | `Both` · Tags: `[dep]` dependency-linked (sorted first), `[del]` deliverable (sorted last).
 
@@ -14,11 +14,18 @@ Legend — Status: `todo` | `in-progress` | `done` | `blocked` · Owner: `Lovabl
 - [x] **[dep]** Reference DDL exported — `/mnt/documents/SPOTS2027_schema.sql` · Owner: Lovable · Status: done · QA: file exists, opens, contains all 114 mapped tables.
 - [x] **[del]** This Build Plan published in-repo + rendered at `/build-plan` · Owner: Lovable · Status: done · QA: file visible in GitHub repo (`tfpdotnyc/cs-spots-rebuild`) and live at `/build-plan` route.
 
-## Phase 2 — VBA Reverse Engineering
+## Phase 2 — SPOTS Read Model (pivoted from full VBA clone)
 
-- [x] **[dep]** Extraction checklist — `docs/spots/VBA_REVERSE_ENGINEERING.md` · Owner: Lovable · Status: done · QA: open file; steps for exporting `.bas/.cls/.frm`, queries, macros from Access on Windows are numbered and reproducible.
-- [ ] **[dep]** User exports VBA modules + uploads — Owner: User · Status: blocked · QA: zip received containing at least one `.bas` per module listed in the MDB inventory.
-- [ ] **[del]** Per-module logic summary — `docs/spots/vba/SUMMARY.md` · Owner: Lovable · Status: todo · QA: every module has Inputs / Outputs / Side-effects / Postgres-equivalent rows.
+Goal: read what SPOTS produces and describe what it does — not duplicate it. Missing business logic is reconstructed via the Open Questions quiz, not by recovering every line of VBA.
+
+- [x] **[dep]** Extraction checklist — `docs/spots/VBA_REVERSE_ENGINEERING.md` v0.2.0 · Owner: Lovable · Status: done · QA: hardened `_Safe` macros, Trust-access fix, Troubleshooting table, pivot note.
+- [x] **[dep]** Saved queries exported — `queries\*.sql` · Owner: User · Status: done.
+- [x] **[dep]** VBA modules exported (best-effort) — `vba\` 4 components, `Protection=0` · Owner: User · Status: done · Note: front-end carries little standalone VBA; logic lives in form/report code-behind captured by Step 4.
+- [ ] **[dep]** Forms/Reports/Macros `SaveAsText` dump + live-workflow screenshots uploaded — Owner: User · Status: in-progress · QA: zip received containing `forms\*.txt`, `reports\*.txt`, and `meta\screens\*-design.png` + `*-runtime.png` for each active workflow.
+- [ ] **[del]** Inventory — `docs/spots/vba/INVENTORY.md` · Owner: Lovable · Status: todo · QA: counts + named list of every artifact found.
+- [ ] **[del]** Read model — `docs/spots/vba/READ_MODEL.md` · Owner: Lovable · Status: todo · QA: per active screen, tables read / tables written / derived values.
+- [ ] **[del]** Query map — `docs/spots/vba/QUERY_MAP.md` · Owner: Lovable · Status: todo · QA: every `.sql` flagged `keep` / `rebuild` / `deprecate` with Postgres target.
+- [ ] **[del]** Open questions quiz — `docs/spots/vba/OPEN_QUESTIONS.md` · Owner: Both · Status: todo · QA: every numbered question answered inline by user.
 
 ## Phase 3 — Lovable Cloud Migration
 
@@ -84,3 +91,5 @@ Executed steps captured from chat history through 2026-06-05:
 13. 2026-06-05 — Shipped in-app Build Plan page at `/build-plan` rendering `docs/spots/BUILD_PLAN.md` as single source of truth. Outcome: zero-drift visual QA surface.
 14. 2026-06-05 — Phase 1 deliverables published: `docs/spots/SCHEMA.md` v0.1.0 (114-table inventory, conventions, critical-table field mappings, open questions) and `docs/spots/ENTITIES.md` v0.1.0 (8 grouped ASCII diagrams). Outcome: Phase 1 closed; ready for Phase 2 (VBA reverse-engineering checklist) and Phase 3 (Lovable Cloud enable).
 15. 2026-06-05 — Workspace move + GitHub reconnect. Sync probe appended to verify `main` branch round-trip after re-authorization.
+16. 2026-06-10 — Hardened VBA export macros (`ExportAllVBA_Safe`, `ExportAllQueries_Safe`, `ExportFormsReportsMacros_Safe`). Diagnosed compile errors (missing DAO ref), silent loops (Trust access to VBProject disabled), and password-locked-project fallback. Checklist bumped to v0.2.0 with Troubleshooting table and Required Trust Center subsection. Queries exported; VBA export returned 4 components at `Protection=0`.
+17. 2026-06-10 — **Strategy pivot**: Phase 2 reframed from "clone SPOTS feature-for-feature" to "read what it produces + describe what it does". Full VBA recovery declared out of scope. New Phase 2 deliverables: `INVENTORY.md`, `READ_MODEL.md`, `QUERY_MAP.md`, `OPEN_QUESTIONS.md`. Per-module `SUMMARY.md` retired. Phase 3 (Cloud enable) cleared to start in parallel with Phase 2 quiz cycle.

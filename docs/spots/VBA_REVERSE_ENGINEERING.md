@@ -1,8 +1,20 @@
 # SPOTS 2027 — VBA Reverse Engineering Checklist
 
-Version: 0.1.0
-Last Updated: 2026-06-05
-Status: **Blocked on user** — requires Microsoft Access (Windows) to extract. `mdb-tools` cannot read VBA, Forms, Reports, Macros, or Query SQL.
+Version: 0.2.0
+Last Updated: 2026-06-10
+Status: **In progress** — Steps 0–3 complete. Steps 4–5 in flight. **Full VBA clone is explicitly out of scope** — see "Strategy pivot" below.
+
+---
+
+## Strategy pivot (2026-06-10)
+
+We are **not** rebuilding SPOTS feature-for-feature. The goals are:
+
+1. **Read** the data SPOTS produces (already covered by the Postgres schema + import pipeline).
+2. **Describe** the business logic well enough to rebuild what's still needed in the new app.
+3. **Deprecate** workflows the user no longer uses.
+
+Therefore: a partial VBA export is acceptable. `SaveAsText` (Step 4) + screenshots (Step 5) of the **live workflows** are sufficient. Missing event-procedure code can be reconstructed from the user's verbal walkthrough during the Open Questions quiz.
 
 ---
 
@@ -12,22 +24,39 @@ Status: **Blocked on user** — requires Microsoft Access (Windows) to extract. 
 
 - **VBA modules** (`.bas`) — standard modules with shared functions/subs.
 - **Class modules** (`.cls`) — object wrappers.
-- **Form modules** (`.frm` + `.frx`) — UI event handlers (`Form_Load`, `cmd*_Click`, etc.).
+- **Form modules** (`.frm`) — UI event handlers (`Form_Load`, `cmd*_Click`, etc.).
 - **Report modules** — print/export logic, often the source of derivative image presets and order paperwork.
 - **Macros** — AutoExec, ribbon hooks, named macros invoked from forms.
-- **Stored Queries** — saved `QueryDefs` (SELECT/INSERT/UPDATE/DELETE/parameter queries). These often encode joins and filters that look like business rules.
+- **Stored Queries** — saved `QueryDefs`. These often encode joins and filters that look like business rules.
 - **References** — DAO/ADO/Outlook/Office/3rd-party COM libs. Each reference is a potential cutover blocker.
-
-Until these are extracted, we cannot faithfully re-implement order processing, image-export presets, scheduling, or sync expectations.
 
 ---
 
 ## Required environment
 
 - Windows 10 or 11
-- Microsoft Access (2016, 2019, 365, or Runtime is **not** sufficient — full Access required for VBE export)
+- Microsoft Access (2016, 2019, 365). Runtime is **not** sufficient — full Access required for VBE export.
 - A working copy of `SPOTS2027.MDB` (never the original)
 - 7-Zip or similar (to zip the export folder)
+
+### Required VBE References
+
+Alt+F11 → **Tools → References** and tick:
+
+- Visual Basic For Applications
+- Microsoft Access xx.0 Object Library
+- OLE Automation
+- Microsoft Office xx.0 Access Database Engine Object Library (DAO)
+
+Without DAO ticked, `DAO.QueryDef` and `CurrentDb` throw `Sub or Function not defined` at compile time.
+
+### Required Trust Center setting (for Step 2 — VBA export)
+
+File → Options → **Trust Center** → Trust Center Settings → **Macro Settings** → tick **"Trust access to the VBA project object model"** → OK → close and reopen the database. Without this, the `Application.VBE.VBProjects` loop runs silently and exports nothing.
+
+### All macros below must live in a Standard Module
+
+VBE → Insert → **Module** → paste → F5 to run, or call by name from the Immediate Window (Ctrl+G). Multi-line `Sub` definitions **cannot** be pasted into the Immediate Window directly.
 
 ---
 
@@ -35,123 +64,164 @@ Until these are extracted, we cannot faithfully re-implement order processing, i
 
 ### 0. Prep
 
-- [ ] Copy `SPOTS2027.MDB` to `C:\spots-rev\SPOTS2027_WORK.MDB`. Work only on the copy.
-- [ ] Create export folder: `C:\spots-rev\export\` with subfolders `vba\`, `queries\`, `forms\`, `reports\`, `macros\`, `meta\`.
-- [ ] Open the copy in Access. If prompted, enable content/macros (we need them readable, not running).
+- [x] Copy `SPOTS2027.MDB` to `C:\spots-rev\SPOTS2027_WORK.MDB`. Work only on the copy.
+- [x] Create export folder: `C:\spots-rev\export\` with subfolders `vba\`, `queries\`, `forms\`, `reports\`, `macros\`, `meta\`, `meta\screens\`.
+- [x] Open the copy in Access. Enable content/macros if prompted.
 
 ### 1. Capture metadata
 
-- [ ] Database Tools → **Database Documenter** → select **All object types** → All → OK. Save the report as PDF to `meta\documenter.pdf`.
+- [ ] Database Tools → **Database Documenter** → All object types → All → OK. Save as PDF to `meta\documenter.pdf`.
 - [ ] File → Options → Current Database — screenshot startup form, AutoExec, ribbon settings to `meta\startup-settings.png`.
-- [ ] In the VBE (Alt+F11) → Tools → References — screenshot the full list to `meta\references.png`. Note any non-standard libraries (Outlook, Word, Excel, Scripting Runtime, FSO, ADO version, custom DLLs).
+- [ ] VBE (Alt+F11) → Tools → References — screenshot full list to `meta\references.png`. Note non-standard libs (Outlook, Word, Excel, Scripting Runtime, FSO, ADO, custom DLLs).
 
-### 2. Export VBA (modules, classes, form code, report code)
-
-Open the VBE (Alt+F11), then in the **Immediate Window** (Ctrl+G) paste and run:
+### 2. Export VBA (hardened, multi-project)
 
 ```vba
-Sub ExportAllVBA()
+Sub ExportAllVBA_Safe()
     Dim outDir As String : outDir = "C:\spots-rev\export\vba\"
-    Dim c As Object, ext As String, fname As String
-    For Each c In Application.VBE.ActiveVBProject.VBComponents
-        Select Case c.Type
-            Case 1: ext = ".bas"   ' standard module
-            Case 2: ext = ".cls"   ' class module
-            Case 3: ext = ".frm"   ' form module
-            Case 100: ext = ".cls" ' document/report code-behind
-            Case Else: ext = ".txt"
-        End Select
-        fname = outDir & c.Name & ext
-        On Error Resume Next
-        Kill fname
-        On Error GoTo 0
-        c.Export fname
-    Next
-    Debug.Print "Done."
-End Sub
-```
-
-- [ ] Run `ExportAllVBA`. Confirm `vba\` contains one file per module. Expect dozens.
-- [ ] Spot-check three files open in Notepad and show readable code (not binary).
-
-### 3. Export saved Queries as SQL
-
-Paste in the Immediate Window:
-
-```vba
-Sub ExportAllQueries()
-    Dim outDir As String : outDir = "C:\spots-rev\export\queries\"
-    Dim qd As DAO.QueryDef, f As Integer, path As String
-    For Each qd In CurrentDb.QueryDefs
-        If Left(qd.Name, 1) <> "~" Then
-            path = outDir & Replace(qd.Name, "/", "_") & ".sql"
-            f = FreeFile
-            Open path For Output As #f
-            Print #f, "-- Query: " & qd.Name
-            Print #f, qd.SQL
-            Close #f
+    If Dir(outDir, vbDirectory) = "" Then MkDir outDir
+    Dim proj As Object, c As Object, ext As String, fname As String
+    Dim okCount As Long, failCount As Long
+    For Each proj In Application.VBE.VBProjects
+        Debug.Print "Project: " & proj.Name & "  Protection=" & proj.Protection
+        If proj.Protection = 0 Then
+            For Each c In proj.VBComponents
+                Select Case c.Type
+                    Case 1: ext = ".bas"
+                    Case 2: ext = ".cls"
+                    Case 3: ext = ".frm"
+                    Case 100: ext = ".cls"
+                    Case Else: ext = ".txt"
+                End Select
+                fname = outDir & proj.Name & "__" & c.Name & ext
+                On Error Resume Next
+                Kill fname
+                c.Export fname
+                If Err.Number = 0 Then okCount = okCount + 1 Else failCount = failCount + 1
+                On Error GoTo 0
+            Next
         End If
     Next
-    Debug.Print "Done."
+    Debug.Print "Exported: " & okCount & "   Failed: " & failCount
 End Sub
 ```
 
-- [ ] Run `ExportAllQueries`. Confirm one `.sql` file per saved query.
+- [x] Run `ExportAllVBA_Safe`. Result on SPOTS: `Project: SPOTSNEW  Protection=0  Exported: 4  Failed: 0`. Most business logic lives in form/report event procedures captured by Step 4 below — this is expected.
 
-### 4. Export Forms and Reports as text (SaveAsText)
+### 3. Export saved Queries as SQL (hardened, late-bound)
 
 ```vba
-Sub ExportFormsReportsMacros()
+Sub ExportAllQueries_Safe()
+    Dim outDir As String : outDir = "C:\spots-rev\export\queries\"
+    If Dir(outDir, vbDirectory) = "" Then MkDir outDir
     Dim db As Object : Set db = CurrentDb
-    Dim obj As AccessObject
-    For Each obj In CurrentProject.AllForms
-        Application.SaveAsText acForm, obj.Name, "C:\spots-rev\export\forms\" & obj.Name & ".txt"
+    Dim qd As Object, f1 As Integer, p As String
+    For Each qd In db.QueryDefs
+        If Left(qd.Name, 1) <> "~" Then
+            p = outDir & Replace(qd.Name, "/", "_") & ".sql"
+            f1 = FreeFile
+            Open p For Output As #f1
+            Print #f1, "-- Query: " & qd.Name
+            Print #f1, qd.SQL
+            Close #f1
+        End If
     Next
-    For Each obj In CurrentProject.AllReports
-        Application.SaveAsText acReport, obj.Name, "C:\spots-rev\export\reports\" & obj.Name & ".txt"
-    Next
-    For Each obj In CurrentProject.AllMacros
-        Application.SaveAsText acMacro, obj.Name, "C:\spots-rev\export\macros\" & obj.Name & ".txt"
-    Next
-    Debug.Print "Done."
+    Debug.Print "Queries done."
 End Sub
 ```
 
-- [ ] Run `ExportFormsReportsMacros`. Each `.txt` is a verbose property dump — that's expected; we need control names, bound fields, and event procedures.
+- [x] Run `ExportAllQueries_Safe`. One `.sql` file per saved query.
 
-### 5. Capture screenshots of key forms/reports
+### 4. Export Forms / Reports / Macros as text (hardened)
 
-For each form/report that exists in the Access nav pane (especially `frm*Order*`, `frm*Session*`, `frm*Image*`, `rpt*Export*`, `rpt*Order*`):
+```vba
+Sub ExportFormsReportsMacros_Safe()
+    Dim base As String : base = "C:\spots-rev\export\"
+    Dim subs, s
+    subs = Array("forms", "reports", "macros")
+    For Each s In subs
+        If Dir(base & s, vbDirectory) = "" Then MkDir base & s
+    Next
+    Dim obj As Object, okF As Long, okR As Long, okM As Long, fail As Long
+    For Each obj In CurrentProject.AllForms
+        On Error Resume Next
+        Application.SaveAsText acForm, obj.Name, base & "forms\" & obj.Name & ".txt"
+        If Err.Number = 0 Then okF = okF + 1 Else fail = fail + 1
+        On Error GoTo 0
+    Next
+    For Each obj In CurrentProject.AllReports
+        On Error Resume Next
+        Application.SaveAsText acReport, obj.Name, base & "reports\" & obj.Name & ".txt"
+        If Err.Number = 0 Then okR = okR + 1 Else fail = fail + 1
+        On Error GoTo 0
+    Next
+    For Each obj In CurrentProject.AllMacros
+        On Error Resume Next
+        Application.SaveAsText acMacro, obj.Name, base & "macros\" & obj.Name & ".txt"
+        If Err.Number = 0 Then okM = okM + 1 Else fail = fail + 1
+        On Error GoTo 0
+    Next
+    Debug.Print "Forms=" & okF & "  Reports=" & okR & "  Macros=" & okM & "  Failed=" & fail
+End Sub
+```
 
-- [ ] Open in Design View, screenshot to `meta\screens\<name>-design.png`.
-- [ ] Open in Form/Report View with sample data, screenshot to `meta\screens\<name>-runtime.png`.
+- [ ] Run `ExportFormsReportsMacros_Safe`. `.txt` files are verbose property dumps containing control names, bound fields, **and embedded event-procedure VBA** — this is where the real business logic lives.
 
-(Skip if a form errors on open — just note the name in `meta\skipped.txt`.)
+### 5. Screenshots of live workflows only
+
+Skip anything you never open. For each **actively used** form/report:
+
+- [ ] Design View → `meta\screens\<name>-design.png`
+- [ ] Form/Report View with real data → `meta\screens\<name>-runtime.png`
+
+Priority targets (skip if unused):
+
+- Customer / Session intake
+- Image browse / tagging
+- Order entry (package selection, line items, totals)
+- Order fulfillment / export to lab
+- Schedule / Appointments
+- Any report routinely printed or emailed (order confirmations, lab sheets, school packets)
 
 ### 6. Package and upload
 
-- [ ] Zip `C:\spots-rev\export\` to `spots-vba-export.zip`.
-- [ ] Upload `spots-vba-export.zip` into this Lovable chat.
+- [ ] Zip `C:\spots-rev\export\` → `spots-vba-export.zip`.
+- [ ] Drag into this Lovable chat. If >20 MB, split: `forms-reports.zip`, `screenshots-1.zip`, `screenshots-2.zip`, etc.
+
+---
+
+## Troubleshooting
+
+| Symptom | Cause | Fix |
+|---------|-------|-----|
+| `Compile error: Sub or Function not defined` on `DAO.QueryDef` or `CurrentDb` | DAO reference missing | Tools → References → tick Microsoft Office Access Database Engine Object Library |
+| Macro must be a single line in Immediate Window | Multi-line Subs can't be pasted there | Insert → Module → paste → F5 |
+| Step 2 loop runs but exports 0 files | "Trust access to the VBA project object model" disabled | Trust Center → Macro Settings → tick it → reopen DB |
+| `Protection=1` printed by `ExportAllVBA_Safe` | VBProject is password-locked | Skip Step 2; rely on Step 4 (`SaveAsText`) for event-procedure code |
+| Step 2 exports only a handful of files (`Protection=0`) | The front-end genuinely has few standard modules; logic lives in form/report code-behind | Expected. Step 4 captures the rest. |
+| `Path not found` writing `.sql` / `.txt` | Subfolder missing | Hardened macros now `MkDir` if missing; otherwise create manually |
+| Form errors on open during screenshots | Broken reference, missing linked table, or dead code | Note name in `meta\skipped.txt` and move on |
 
 ---
 
 ## What Lovable does once the zip arrives
 
 1. Unpack into `/tmp/spots-vba/`.
-2. Inventory: count modules, classes, forms, reports, macros, queries → write `docs/spots/vba/INVENTORY.md`.
-3. Per module: extract Inputs / Outputs / Side-effects / Postgres-or-TS equivalent → write `docs/spots/vba/SUMMARY.md` (one row per Sub/Function).
-4. Flag risky patterns: `DoCmd.RunSQL`, `CurrentDb.Execute`, `Shell`, `CreateObject("Outlook…")`, file I/O against `studios.spotspath`, hard-coded UNC paths, ADO connection strings.
-5. Map saved Queries to Postgres equivalents (views, RLS-aware functions, or app-layer queries) in `docs/spots/vba/QUERY_MAP.md`.
-6. Surface unresolved business rules as questions back to the user.
+2. **`docs/spots/vba/INVENTORY.md`** — counts + list of every form/report/macro/query/module found.
+3. **`docs/spots/vba/READ_MODEL.md`** — for each active screen: tables read, tables written, derived values computed. Spec for new read-only views + rebuilt write paths.
+4. **`docs/spots/vba/QUERY_MAP.md`** — every saved `.sql` → Postgres view / function / app query, flagged `keep` / `rebuild` / `deprecate`.
+5. **`docs/spots/vba/OPEN_QUESTIONS.md`** — numbered quiz of business rules that can't be inferred from artifacts alone. User answers inline.
+6. Flag risky patterns: `DoCmd.RunSQL`, `CurrentDb.Execute`, `Shell`, `CreateObject("Outlook…")`, hard-coded UNC paths, ADO connection strings.
+7. Bump `BUILD_PLAN.md` → v0.3.2, close Phase 2.
 
 ---
 
 ## Open questions for the user
 
-- [ ] Are there **multiple `.mdb` files** in production (front-end / back-end split), or is `SPOTS2027.MDB` the entire app?
-- [ ] Any **linked tables** to ODBC sources, SharePoint, or other MDBs? (Visible in nav pane with a globe/arrow icon.)
-- [ ] Any **add-ins / .accda / .mde / .accde** loaded alongside?
-- [ ] Confirm which forms are entry points actually used daily vs. legacy/dead.
+- [ ] Multiple `.mdb` files in production (front-end / back-end split), or is `SPOTS2027.MDB` the entire app?
+- [ ] Any linked tables to ODBC / SharePoint / other MDBs? (Globe/arrow icon in nav pane.)
+- [ ] Any `.accda` / `.mde` / `.accde` add-ins loaded alongside?
+- [ ] Which forms/reports are entry points actually used daily vs. legacy/dead?
 
 ---
 
@@ -159,11 +229,11 @@ For each form/report that exists in the Access nav pane (especially `frm*Order*`
 
 | Step | Status | Notes |
 |------|--------|-------|
-| 0. Prep | blocked-on-user | needs Windows + Access |
-| 1. Metadata | blocked-on-user | |
-| 2. VBA export | blocked-on-user | |
-| 3. Queries export | blocked-on-user | |
-| 4. Forms/Reports/Macros export | blocked-on-user | |
-| 5. Screenshots | blocked-on-user | |
-| 6. Upload zip | blocked-on-user | |
-| 7. Lovable inventory + summary | todo | unblocks on upload |
+| 0. Prep | done | |
+| 1. Metadata | in-progress | Documenter PDF + screenshots pending |
+| 2. VBA export | done | 4 components exported, Protection=0. Full clone declared out of scope. |
+| 3. Queries export | done | All saved QueryDefs exported as `.sql` |
+| 4. Forms/Reports/Macros export | in-progress | Hardened `_Safe` variant ready |
+| 5. Screenshots | in-progress | Live workflows only |
+| 6. Upload zip | todo | partials accepted |
+| 7. Lovable inventory + read model + quiz | todo | unblocks on upload |
