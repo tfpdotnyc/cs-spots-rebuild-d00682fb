@@ -1,0 +1,4 @@
+-- Query: eclSittingFinancialCustList_DateRange
+SELECT CustomerListData.ListID, eclSittingFinancialSum_DateRange.CustomerID, eclSittingFinancialSum_DateRange.Method, eclSittingFinancialSum_DateRange.SumOfAmount
+FROM CustomerListData INNER JOIN eclSittingFinancialSum_DateRange ON CustomerListData.CustomerID = eclSittingFinancialSum_DateRange.CustomerID;
+

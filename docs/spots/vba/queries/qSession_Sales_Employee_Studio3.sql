@@ -1,0 +1,7 @@
+-- Query: qSession_Sales_Employee_Studio3
+TRANSFORM Sum(qSession_Sales_Employee_Studio1.CountOfSessionDetailID) AS SumOfCountOfSessionDetailID
+SELECT qSession_Sales_Employee_Studio1.Studio, qSession_Sales_Employee_Studio1.UserID
+FROM qSession_Sales_Employee_Studio1 INNER JOIN SessionItems ON qSession_Sales_Employee_Studio1.SessionItemID = SessionItems.SessionItemID
+GROUP BY qSession_Sales_Employee_Studio1.Studio, qSession_Sales_Employee_Studio1.UserID
+PIVOT SessionItems.Description;
+
