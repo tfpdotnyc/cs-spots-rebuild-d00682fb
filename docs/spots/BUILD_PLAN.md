@@ -1,7 +1,9 @@
 # SPOTS 2027 — Build Plan
 
-Version: 0.4.0
+Version: 0.5.0
 Last Updated: 2026-06-10
+
+> **Auth model:** This app is embedded inside a host website that owns authentication. SPOTS does NOT ship its own login UI. The host site is responsible for establishing a Supabase session (JWT) and forwarding it to the embed; SPOTS only consumes `auth.uid()` for RLS. All "Auth (login/signup)" deliverables are therefore out of scope; studio scoping still flows through `user_studios` + `has_studio_access()`.
 
 Legend — Status: `todo` | `in-progress` | `done` | `blocked` · Owner: `Lovable` | `User` | `Both` · Tags: `[dep]` dependency-linked (sorted first), `[del]` deliverable (sorted last).
 
