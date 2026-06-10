@@ -1,0 +1,5 @@
+-- Query: qSalespersonItemSummary3Total
+SELECT qSalespersonItemSummary1Total.UID, qSalespersonItemSummary1Total.OCount, qSalespersonItemSummary2Total.ItemType, Count(qSalespersonItemSummary2Total.OrderDetailID) AS ICount
+FROM qSalespersonItemSummary1Total INNER JOIN qSalespersonItemSummary2Total ON qSalespersonItemSummary1Total.UID = qSalespersonItemSummary2Total.UID
+GROUP BY qSalespersonItemSummary1Total.UID, qSalespersonItemSummary1Total.OCount, qSalespersonItemSummary2Total.ItemType;
+

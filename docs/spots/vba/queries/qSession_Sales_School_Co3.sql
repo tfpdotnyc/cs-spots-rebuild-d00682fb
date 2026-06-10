@@ -1,0 +1,7 @@
+-- Query: qSession_Sales_School_Co3
+TRANSFORM Sum(qSession_Sales_School_Co1.CountOfSessionDetailID) AS SumOfCountOfSessionDetailID
+SELECT qSession_Sales_School_Co1.SchoolID
+FROM qSession_Sales_School_Co1 INNER JOIN SessionItems ON qSession_Sales_School_Co1.SessionItemID = SessionItems.SessionItemID
+GROUP BY qSession_Sales_School_Co1.SchoolID
+PIVOT SessionItems.Description;
+

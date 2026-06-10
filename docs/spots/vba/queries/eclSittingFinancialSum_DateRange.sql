@@ -1,0 +1,5 @@
+-- Query: eclSittingFinancialSum_DateRange
+SELECT eclSittingFinancialDetail_DateRange.CustomerID, eclSittingFinancialDetail_DateRange.Method, Sum(eclSittingFinancialDetail_DateRange.Amount) AS SumOfAmount
+FROM eclSittingFinancialDetail_DateRange
+GROUP BY eclSittingFinancialDetail_DateRange.CustomerID, eclSittingFinancialDetail_DateRange.Method;
+

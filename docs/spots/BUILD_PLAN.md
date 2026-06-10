@@ -1,6 +1,6 @@
 # SPOTS 2027 — Build Plan
 
-Version: 0.3.2
+Version: 0.4.0
 Last Updated: 2026-06-10
 
 Legend — Status: `todo` | `in-progress` | `done` | `blocked` · Owner: `Lovable` | `User` | `Both` · Tags: `[dep]` dependency-linked (sorted first), `[del]` deliverable (sorted last).
@@ -21,11 +21,12 @@ Goal: read what SPOTS produces and describe what it does — not duplicate it. M
 - [x] **[dep]** Extraction checklist — `docs/spots/VBA_REVERSE_ENGINEERING.md` v0.2.0 · Owner: Lovable · Status: done · QA: hardened `_Safe` macros, Trust-access fix, Troubleshooting table, pivot note.
 - [x] **[dep]** Saved queries exported — `queries\*.sql` · Owner: User · Status: done.
 - [x] **[dep]** VBA modules exported (best-effort) — `vba\` 4 components, `Protection=0` · Owner: User · Status: done · Note: front-end carries little standalone VBA; logic lives in form/report code-behind captured by Step 4.
-- [ ] **[dep]** Forms/Reports/Macros `SaveAsText` dump + live-workflow screenshots uploaded — Owner: User · Status: in-progress · QA: zip received containing `forms\*.txt`, `reports\*.txt`, and `meta\screens\*-design.png` + `*-runtime.png` for each active workflow.
-- [ ] **[del]** Inventory — `docs/spots/vba/INVENTORY.md` · Owner: Lovable · Status: todo · QA: counts + named list of every artifact found.
-- [ ] **[del]** Read model — `docs/spots/vba/READ_MODEL.md` · Owner: Lovable · Status: todo · QA: per active screen, tables read / tables written / derived values.
-- [ ] **[del]** Query map — `docs/spots/vba/QUERY_MAP.md` · Owner: Lovable · Status: todo · QA: every `.sql` flagged `keep` / `rebuild` / `deprecate` with Postgres target.
-- [ ] **[del]** Open questions quiz — `docs/spots/vba/OPEN_QUESTIONS.md` · Owner: Both · Status: todo · QA: every numbered question answered inline by user.
+- [x] **[dep]** Forms/Reports/Macros `SaveAsText` dump — Owner: User · Status: done (superseded) · Note: COM SaveAsText returned 0 forms (`80070520` logon-session error). Superseded by Database Documenter PDF (`export/meta/documenter.pdf`, 8.2 MB) which dumps every form/report control + bound field + event-procedure name — sufficient for the read model.
+- [x] **[dep]** Main-screen anchor uploaded — `spots_main_screen.JPG` · Owner: User · Status: done · QA: locks Phase 2 read model to 14 in-scope tables out of 114.
+- [x] **[del]** Inventory — `docs/spots/vba/INVENTORY.md` · Owner: Lovable · Status: done · QA: counts + named list of every artifact (114 tables, 347 queries, 4 modules, 2 reports, 0 forms-via-COM).
+- [x] **[del]** Read model — `docs/spots/vba/READ_MODEL.md` · Owner: Lovable · Status: done · QA: every main-screen button has reads/writes/derived values mapped.
+- [x] **[del]** Query map — `docs/spots/vba/QUERY_MAP.md` · Owner: Lovable · Status: done · QA: all 347 queries flagged keep/rebuild/deprecate, grouped by domain.
+- [ ] **[del]** Open questions quiz — `docs/spots/vba/OPEN_QUESTIONS.md` · Owner: Both · Status: in-progress · QA: every numbered question answered inline by user. Sections A.2 (Misc1/2/3) and C.1 (Order Status state machine) are gating Phase 3 final migration.
 
 ## Phase 3 — Lovable Cloud Migration
 
@@ -93,3 +94,5 @@ Executed steps captured from chat history through 2026-06-05:
 15. 2026-06-05 — Workspace move + GitHub reconnect. Sync probe appended to verify `main` branch round-trip after re-authorization.
 16. 2026-06-10 — Hardened VBA export macros (`ExportAllVBA_Safe`, `ExportAllQueries_Safe`, `ExportFormsReportsMacros_Safe`). Diagnosed compile errors (missing DAO ref), silent loops (Trust access to VBProject disabled), and password-locked-project fallback. Checklist bumped to v0.2.0 with Troubleshooting table and Required Trust Center subsection. Queries exported; VBA export returned 4 components at `Protection=0`.
 17. 2026-06-10 — **Strategy pivot**: Phase 2 reframed from "clone SPOTS feature-for-feature" to "read what it produces + describe what it does". Full VBA recovery declared out of scope. New Phase 2 deliverables: `INVENTORY.md`, `READ_MODEL.md`, `QUERY_MAP.md`, `OPEN_QUESTIONS.md`. Per-module `SUMMARY.md` retired. Phase 3 (Cloud enable) cleared to start in parallel with Phase 2 quiz cycle.
+18. 2026-06-10 — Codex/PowerShell export ingested from `tfpdotnyc/cs-spots-rebuild` → `export/`: 347 saved queries, 4 standard modules, Database Documenter PDF (8.2 MB), inventory JSON. Forms-via-COM returned 0 (`80070520` logon-session error) and was declared **superseded by the Documenter PDF**, which provides the structural dump needed for the read model. Authoritative Postgres DDL replaced at `/mnt/documents/SPOTS2027_schema.sql` from user-supplied `SPOTS2027_Schema_PostgreSQL_with_indexes.sql` (2,295 lines).
+19. 2026-06-10 — Phase 2 deliverables shipped: `docs/spots/vba/INVENTORY.md`, `READ_MODEL.md` (anchored to `spots_main_screen.JPG` — 14 in-scope tables out of 114), `QUERY_MAP.md` (347 queries classified keep/rebuild/deprecate by domain), `OPEN_QUESTIONS.md` (quiz pending user answers; A.2 Misc1/2/3 and C.1 Order Status state machine flagged as gating Phase 3 final migration). Build Plan bumped to v0.4.0. Phase 3 (Lovable Cloud enable + core migration) unblocked to start.

@@ -1,0 +1,4 @@
+-- Query: qMLabel_Photod_Datetime_CustList
+SELECT qMLabel_Photod_Datetime.DateTime, qMLabel_Photod_Datetime.School, qMLabel_Photod_Datetime.FirstName, qMLabel_Photod_Datetime.LastName, qMLabel_Photod_Datetime.Address, qMLabel_Photod_Datetime.City, qMLabel_Photod_Datetime.State, qMLabel_Photod_Datetime.ZipCode, qMLabel_Photod_Datetime.Phone, qMLabel_Photod_Datetime.CustomerID, qMLabel_Photod_Datetime.SchoolID, qMLabel_Photod_Datetime.YBJobNumber, CustomerListData.ListID
+FROM qMLabel_Photod_Datetime INNER JOIN CustomerListData ON qMLabel_Photod_Datetime.CustomerID = CustomerListData.CustomerID;
+

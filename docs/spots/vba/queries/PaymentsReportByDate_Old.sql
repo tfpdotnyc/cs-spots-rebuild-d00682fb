@@ -1,0 +1,12 @@
+-- Query: PaymentsReportByDate_Old
+SELECT [Customers].[LastName]+' '+[Customers].[Firstname] AS CustomerName, CDate(Format([Date],'mm/dd/yyyy')) AS DepositDate, Customers.CustomerID, Mid([Users].[FirstName],1,1)+Mid([Users].[LastName],1,1) AS UsersName, Sum(DepositPayments.Amount) AS Amount, DepositPayments.Method, 'Deposit Payments' AS RPT, DepositPayments.CreditCardType
+FROM (DepositPayments LEFT JOIN Customers ON DepositPayments.CustomerID = Customers.CustomerID) LEFT JOIN Users ON DepositPayments.UserID = Users.UserID
+GROUP BY [Customers].[LastName]+' '+[Customers].[Firstname], CDate(Format([Date],'mm/dd/yyyy')), Customers.CustomerID, Mid([Users].[FirstName],1,1)+Mid([Users].[LastName],1,1), DepositPayments.Method, 'Deposit Payments', DepositPayments.CreditCardType;
+Union
+SELECT [Customers].[LastName]+' '+[Customers].[Firstname] AS CustomerName, CDate(Format([OrderPayments].[Date],'mm/dd/yyyy')) AS OrderDate, Customers.CustomerID, Mid([Users].[FirstName],1,1)+Mid([Users].[LastName],1,1) AS UsersName, Sum(OrderPayments.Amount) AS Amount, OrderPayments.Method, 'Order Payments' AS RPT, OrderPayments.CreditCardType
+FROM ((OrderPayments INNER JOIN Users ON OrderPayments.UserID = Users.UserID) INNER JOIN Orders ON OrderPayments.OrderID = Orders.OrderID) INNER JOIN Customers ON Orders.CustomerID = Customers.CustomerID
+GROUP BY [Customers].[LastName]+' '+[Customers].[Firstname], CDate(Format([OrderPayments].[Date],'mm/dd/yyyy')), Customers.CustomerID, Mid([Users].[FirstName],1,1)+Mid([Users].[LastName],1,1), OrderPayments.Method, 'Order Payments', OrderPayments.CreditCardType;
+UNION SELECT [Customers].[LastName]+' '+[Customers].[Firstname] AS CustomerName, CDate(Format([SessionPayments].[Date],'mm/dd/yyyy')) AS SessionDate, Customers.CustomerID, Mid([Users].[FirstName],1,1)+Mid([Users].[LastName],1,1) AS UsersName, Sum(SessionPayments.Amount) AS Amount, SessionPayments.Method, 'Session Payments' AS RPT, SessionPayments.CreditCardType
+FROM Customers INNER JOIN ((SessionPayments INNER JOIN Users ON SessionPayments.UserID = Users.UserID) INNER JOIN Sessions ON SessionPayments.SessionID = Sessions.SessionID) ON Customers.CustomerID = Sessions.CustomerID
+GROUP BY [Customers].[LastName]+' '+[Customers].[Firstname], CDate(Format([SessionPayments].[Date],'mm/dd/yyyy')), Customers.CustomerID, Mid([Users].[FirstName],1,1)+Mid([Users].[LastName],1,1), SessionPayments.Method, SessionPayments.CreditCardType;
+

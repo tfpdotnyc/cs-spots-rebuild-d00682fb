@@ -1,0 +1,7 @@
+-- Query: q_OrderStatusOverview
+PARAMETERS pOrderID IEEEDouble;
+SELECT 0 AS ItremCount, IIf([Actions].[Action]=5 Or [Actions].[Action]=6,[Description] & " - " & [RetName],[Description]) AS Status, Actions.Date, Trim(Users.FirstName)+' '+Users.LastName AS ProcessedBy, Studios.Name AS Location, Retouchers.Name AS RetName, Actions.Action
+FROM (((Actions LEFT JOIN ActionItems ON Actions.Action = ActionItems.Action) LEFT JOIN Studios ON Actions.Studio = Studios.Studio) LEFT JOIN Users ON Actions.UserID = Users.UserID) LEFT JOIN Retouchers ON Actions.ExtraID = Retouchers.Retoucher
+WHERE (((Actions.OrderID)=[pOrderID]))
+ORDER BY Actions.Date, Actions.ActionID;
+

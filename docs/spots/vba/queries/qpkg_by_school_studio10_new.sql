@@ -1,0 +1,5 @@
+-- Query: qpkg_by_school_studio10_new
+SELECT Schools.Studio, Schools.School, qpkg_by_school1_new.[# SENIORS], qpkg_by_school3_new.[# PHOTOD], qpkg_by_school5_new.[# ORDERED], qpkg_by_school6_new.[TOTAL SALES], qpkg_by_school7_new.[DEP  PAID] AS [DEP  PAID1], qpkg_by_school7B_new.[DEP  PAID2], IIf(IsNull([DEP  PAID1]),0,[DEP  PAID1])+IIf(IsNull([DEP  PAID2]),0,[DEP  PAID2]) AS [DEP  PAID], qpkg_by_school9_new.[AVG ORDER]
+FROM ((((((qpkg_by_school1_new LEFT JOIN qpkg_by_school3_new ON qpkg_by_school1_new.SchoolID = qpkg_by_school3_new.SchoolID) LEFT JOIN qpkg_by_school5_new ON qpkg_by_school1_new.SchoolID = qpkg_by_school5_new.SchoolID) LEFT JOIN qpkg_by_school6_new ON qpkg_by_school1_new.SchoolID = qpkg_by_school6_new.SchoolID) LEFT JOIN qpkg_by_school7_new ON qpkg_by_school1_new.SchoolID = qpkg_by_school7_new.SchoolID) LEFT JOIN qpkg_by_school9_new ON qpkg_by_school1_new.SchoolID = qpkg_by_school9_new.SchoolID) LEFT JOIN Schools ON qpkg_by_school1_new.SchoolID = Schools.SchoolID) LEFT JOIN qpkg_by_school7B_new ON qpkg_by_school1_new.SchoolID = qpkg_by_school7B_new.SchoolID
+ORDER BY Schools.Studio, Schools.School;
+

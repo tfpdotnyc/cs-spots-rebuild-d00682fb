@@ -1,0 +1,5 @@
+-- Query: qYrBook_Paid1
+SELECT Customers.SchoolID, IIf([Customers].[CustomerID]<99999999,Int([Customers].[CustomerID]/1000)*1000,Int(Val(Mid$(Trim$(Str([Customers].[CustomerID])),5))/1000)*1000) AS SchoolIDOld, Customers.LastName, Customers.FirstName, Sessions.CustomerID, Sessions.SessionID, Sessions.SessionNumber, Format([DateTime],'mm/dd/yy') AS EffDate, Sessions.YearbookFee AS YearbookFeeOld, Studios.SalesTaxRate, Schools.YearbookFeeTaxable, IIf([Schools].[YearbookFeeTaxable]=True,[Sessions].[YearbookFee]*(1+[Studios].[SalesTaxRate]),[Sessions].[YearbookFee]) AS YearbookFee, IIf(IsNull([TotalPayments]),0,[TotalPayments]) AS TPayments, IIf(IsNull([TotalDeposit]),0,[TotalDeposit]) AS TDeposit
+FROM ((((Sessions INNER JOIN Customers ON Sessions.CustomerID = Customers.CustomerID) INNER JOIN Studios ON Sessions.Studio = Studios.Studio) INNER JOIN Schools ON Customers.SchoolID = Schools.SchoolID) LEFT JOIN 000AuditSessionsTotalPayments ON Sessions.SessionID = [000AuditSessionsTotalPayments].SessionID) LEFT JOIN 000AuditSessionDeposit ON Sessions.SessionID = [000AuditSessionDeposit].SessionID
+WHERE (((Sessions.SessionNumber)='SA') AND ((Sessions.YearbookFee)<>0));
+

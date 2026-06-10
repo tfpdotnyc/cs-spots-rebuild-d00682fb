@@ -1,0 +1,568 @@
+{
+    "SourceDb":  "C:\\spots-rev\\SPOTS2027_WORK.MDB",
+    "WorkDb":  "C:\\Users\\Alec\\Documents\\Codex\\2026-06-10\\can-codex-programmatically-export-all-objects\\work\\SPOTS2027_WORK_copy.mdb",
+    "ExportRoot":  "C:\\Users\\Alec\\Documents\\Codex\\2026-06-10\\can-codex-programmatically-export-all-objects\\outputs\\spotsexport",
+    "QueryCount":  347,
+    "Inventory":  {
+                      "Tables":  [
+                                     {
+                                         "Name":  "AccessLevels",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "ActionItems",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "Actions",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "Actions (deleted records) 2",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "Actions (deleted records) 21",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "ActionsMissing",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "Appointments",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "Background",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "BlockedTimes",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "BoysAttire",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "Colors",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "CustomerComposites",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "CustomerCompositesBorders",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "CustomerCompositesPages",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "CustomerCompositesUtility",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "CustomerListData",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "CustomerLists",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "Customers",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "CustSchID",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "CustSchID1",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "DayLabels",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "Default_ExportImagesData",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "DepositPayments",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "ECommImportFiles",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "ECommLists",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "EmailSetups",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "Events",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "FilmRolls",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "GirlsAttire",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "IDSymbols",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "ImageProperties",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "LabeledDays",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "Lists",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "MiscPaymentTypes",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "Name AutoCorrect Save Failures",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "OffDays",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "OrderDetails",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "OrderDetailsComments",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "OrderDetailsNonAuto",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "OrderDetailsNonAutoText",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "OrderItems",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "OrderItemType",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "OrderPayments",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "OrderPaymentsMissing",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "Orders",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "OrdersMissing",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "OxFileSetDefXML",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "OxTemplates",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "OxTemplatesAttXML",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "Paste Errors",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "PhotographerBreaks",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "Photographers",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "PoseOrders",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "PoseOrdersMissing",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "PoseSettings",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "PrintingLabs",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "ProcessSteps",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "Reports",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "ResitReasons",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "Retouchers",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "RetouchStatus",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "Schools",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "Schools (deleted records)",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "SessionDetail",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "SessionItems",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "SessionPayments",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "Sessions",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "SessionStatus",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "SessionStatusLegend",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "Shipping",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "ShippingMethods",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "ShootList",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "SimplePhotoImportFiles",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "SimplePhotoLists",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "SimplePhotoXMLLists",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "StdNodes",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "StdOverlayTemplates",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "StdOverlayTemplatesCI",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "StdOverlayTemplatesCI1",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "StdOverlayTemplatesImages",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "StdOverlayTemplatesNA",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "StdOverlayTemplatesName",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "StdOverlayTemplatesUtility",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "StdPackages",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "StdPackagesContents",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "StdSportsMatesTemplates",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "StdSportsMatesTemplatesImages",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "StdSportsMatesTemplatesNA",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "StdSportsMatesTemplatesName",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "StdSportsMatesTemplatesUtility",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "StdTemplates",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "StdTemplates (deleted records)",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "Studios",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "StudiosDefault",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "SystemSettings",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "Temp_AppointmentSchedule",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "Temp_AppointmentSchedule (deleted records) 2",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "Temp_AppointmentSchedule (deleted records) 21",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "temp_boxpackagelabel",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "Temp_OrderDetailTemplate",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "Temp_OrderOverviewTemplate",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "Temp_Postcards",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "Temp_PreviousPaymentsTemplate",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "Temp_SessionOrderTemplate",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "Temp_SessionOverviewTemplate",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "Temp_StatusOverview",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "tmpMLabels",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "tmpMLabelsDateTime",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "tmpOxTemplatesAttXML",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "tmpYBOMiss",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "tmpYBOMiss (deleted records)",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "TrackCustomerChanges",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "TrackStaticTableChanges",
+                                         "Attributes":  0
+                                     },
+                                     {
+                                         "Name":  "Users",
+                                         "Attributes":  0
+                                     }
+                                 ],
+                      "Forms":  [
+
+                                ],
+                      "Reports":  [
+                                      {
+                                          "Name":  "Labels Actions",
+                                          "Properties":  {
+                                                             "Name":  "Labels Actions",
+                                                             "Owner":  "",
+                                                             "UserName":  "admin",
+                                                             "Permissions":  "",
+                                                             "AllPermissions":  "",
+                                                             "Container":  "Reports",
+                                                             "DateCreated":  "01/26/2017 16:59:42",
+                                                             "LastUpdated":  "01/26/2017 16:59:44",
+                                                             "ThemeResourceName":  "[Use DB Theme]",
+                                                             "GUID":  "210 244 18 150 225 79 232 72 161 186 1 156 28 245 213 239",
+                                                             "NameMap":  "10 204 14 85 0 0 0 0 61 153 193 127 51 15 2 65 189 187 146 215 18 232 98 183 0 0 0 0 186 24 102 162 54 225 228 64 0 0 0 0 0 0 0 0 65 0 99 0 116 0 105 0 111 0 110 0 115 0 0 0 0 0 0 0 219 102 1 85 29 90 237 73 154 78 135 104 5 226 111 78 7 0 0 0 61 153 193 127 51 15 2 65 189 187 146 215 18 232 98 183 65 0 99 0 116 0 105 0 111 0 110 0 73 0 68 0 0 0 0 0 0 0 96 229 80 196 18 61 85 71 158 161 81 24 165 217 4 31 7 0 0 0 61 153 193 127 51 15 2 65 189 187 146 215 18 232 98 183 79 0 114 0 100 0 101 0 114 0 73 0 68 0 0 0 0 0 0 0 138 78 201 102 152 149 112 69 149 197 227 220 240 35 33 229 7 0 0 0 61 153 193 127 51 15 2 65 189 187 146 215 18 232 98 183 65 0 99 0 116 0 105 0 111 0 110 0 0 0 0 0 0 0 171 222 178 156 40 39 25 67 184 180 242 212 194 209 57 156 7 0 0 0 61 153 193 127 51 15 2 65 189 187 146 215 18 232 98 183 68 0 97 0 116 0 101 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 12 0 0 0 5 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0"
+                                                         }
+                                      },
+                                      {
+                                          "Name":  "rpt_NoPhotobySch",
+                                          "Properties":  {
+                                                             "Name":  "rpt_NoPhotobySch",
+                                                             "Owner":  "",
+                                                             "UserName":  "admin",
+                                                             "Permissions":  "",
+                                                             "AllPermissions":  "",
+                                                             "Container":  "Reports",
+                                                             "DateCreated":  "01/26/2017 16:59:42",
+                                                             "LastUpdated":  "06/09/2026 15:54:54",
+                                                             "ThemeResourceName":  "[Use DB Theme]",
+                                                             "GUID":  "45 197 38 171 23 152 70 76 162 39 148 197 117 170 246 110",
+                                                             "NameMap":  "10 204 14 85 0 0 0 0 58 243 29 139 46 103 146 76 160 82 156 179 224 92 137 146 0 0 0 0 243 81 50 169 54 225 228 64 0 0 0 0 0 0 0 0 113 0 117 0 95 0 110 0 111 0 80 0 104 0 111 0 116 0 111 0 32 0 98 0 121 0 32 0 115 0 99 0 104 0 111 0 111 0 108 0 0 0 0 0 0 0 153 108 205 86 156 160 125 73 142 103 148 251 8 107 29 237 7 0 0 0 58 243 29 139 46 103 146 76 160 82 156 179 224 92 137 146 83 0 99 0 104 0 111 0 111 0 108 0 0 0 0 0 0 0 146 247 221 168 30 169 248 66 171 54 57 158 78 77 189 228 7 0 0 0 58 243 29 139 46 103 146 76 160 82 156 179 224 92 137 146 67 0 117 0 115 0 116 0 111 0 109 0 101 0 114 0 73 0 68 0 0 0 0 0 0 0 149 136 196 251 18 98 252 69 160 141 233 130 188 193 165 61 7 0 0 0 58 243 29 139 46 103 146 76 160 82 156 179 224 92 137 146 76 0 97 0 115 0 116 0 78 0 97 0 109 0 101 0 0 0 0 0 0 0 171 44 127 106 141 156 122 76 175 252 123 144 215 186 236 32 7 0 0 0 58 243 29 139 46 103 146 76 160 82 156 179 224 92 137 146 70 0 105 0 114 0 115 0 116 0 78 0 97 0 109 0 101 0 0 0 0 0 0 0 165 69 46 89 117 192 76 73 130 97 54 46 88 182 135 139 7 0 0 0 58 243 29 139 46 103 146 76 160 82 156 179 224 92 137 146 65 0 100 0 100 0 114 0 101 0 115 0 115 0 0 0 0 0 0 0 108 223 7 242 91 121 215 66 159 14 4 238 61 230 185 172 7 0 0 0 58 243 29 139 46 103 146 76 160 82 156 179 224 92 137 146 67 0 105 0 116 0 121 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 12 0 0 0 5 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0"
+                                                         }
+                                      }
+                                  ],
+                      "Scripts":  [
+
+                                  ],
+                      "Modules":  [
+                                      {
+                                          "Name":  "Module1",
+                                          "Properties":  {
+                                                             "Name":  "Module1",
+                                                             "Owner":  "",
+                                                             "UserName":  "admin",
+                                                             "Permissions":  "",
+                                                             "AllPermissions":  "",
+                                                             "Container":  "Modules",
+                                                             "DateCreated":  "01/26/2017 16:59:42",
+                                                             "LastUpdated":  "01/26/2017 16:59:42"
+                                                         }
+                                      },
+                                      {
+                                          "Name":  "Module2",
+                                          "Properties":  {
+                                                             "Name":  "Module2",
+                                                             "Owner":  "",
+                                                             "UserName":  "admin",
+                                                             "Permissions":  "",
+                                                             "AllPermissions":  "",
+                                                             "Container":  "Modules",
+                                                             "DateCreated":  "06/10/2026 11:56:28",
+                                                             "LastUpdated":  "06/10/2026 11:56:28"
+                                                         }
+                                      },
+                                      {
+                                          "Name":  "Module3",
+                                          "Properties":  {
+                                                             "Name":  "Module3",
+                                                             "Owner":  "",
+                                                             "UserName":  "admin",
+                                                             "Permissions":  "",
+                                                             "AllPermissions":  "",
+                                                             "Container":  "Modules",
+                                                             "DateCreated":  "06/10/2026 11:56:28",
+                                                             "LastUpdated":  "06/10/2026 11:56:28"
+                                                         }
+                                      },
+                                      {
+                                          "Name":  "Module4",
+                                          "Properties":  {
+                                                             "Name":  "Module4",
+                                                             "Owner":  "",
+                                                             "UserName":  "admin",
+                                                             "Permissions":  "",
+                                                             "AllPermissions":  "",
+                                                             "Container":  "Modules",
+                                                             "DateCreated":  "06/10/2026 11:56:28",
+                                                             "LastUpdated":  "06/10/2026 11:56:28"
+                                                         }
+                                      }
+                                  ]
+                  },
+    "AccessTextExport":  {
+                             "Available":  false,
+                             "Error":  "Retrieving the COM class factory for component with CLSID {73A4C9C1-D68D-11D0-98BF-00A0C90DC8D9} failed due to the following error: 80070520 A specified logon session does not exist. It may already have been terminated. (Exception from HRESULT: 0x80070520).",
+                             "Exported":  [
+
+                                          ]
+                         },
+    "GeneratedAt":  "2026-06-10T13:19:36.5349698-04:00"
+}
