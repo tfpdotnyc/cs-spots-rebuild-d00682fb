@@ -1,8 +1,24 @@
 # SPOTS 2027 — VBA Reverse Engineering Checklist
 
-Version: 0.2.0
+Version: 0.3.0
 Last Updated: 2026-06-10
-Status: **In progress** — Steps 0–3 complete. Steps 4–5 in flight. **Full VBA clone is explicitly out of scope** — see "Strategy pivot" below.
+Status: **Done** — superseded by Codex/PowerShell export (2026-06-10). 347 queries + 4 modules + Documenter PDF extracted; forms-via-COM bypassed in favor of the Documenter dump. **Full VBA clone is explicitly out of scope** — see "Strategy pivot" below.
+
+---
+
+## Codex-based export (2026-06-10) — what actually worked
+
+The hardened VBA macros below (Steps 2-4) ran successfully for queries and standard modules but were ultimately superseded by a PowerShell-driven export run from the user's workstation (committed to `tfpdotnyc/cs-spots-rebuild` under `export/`). That run produced:
+
+- `export/queries/*.sql` — **347 saved queries**
+- `export/modules/*.bas` + `export/vba/*.bas` — 4 unique standard modules (`Protection=0`)
+- `export/meta/documenter.pdf` — full **Database Documenter** dump (8.2 MB): every form, report, control, bound field, format string, and event-procedure name
+- `export/metadata/inventory.json` — structured object inventory
+- `export/metadata/summary.txt` — `Queries: 347 · Forms: 0 · Reports: 2 · Modules: 4`
+
+The `SaveAsText` step (Step 4 below) returned **0 forms** because the Access COM class factory failed with `0x80070520 — specified logon session does not exist`. This is a non-blocker: the Documenter PDF dumps the structural shape of every form and report (control names, bound fields, event-procedure names) and that's all the read model needs. The actual VBA *body* of event procedures is out of scope per the strategy pivot.
+
+The macro-based path documented below remains valid as a fallback if a future MDB needs re-export on a workstation where the PowerShell tooling isn't installed.
 
 ---
 
