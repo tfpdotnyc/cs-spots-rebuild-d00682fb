@@ -1,7 +1,9 @@
 # SPOTS 2027 — Build Plan
 
-Version: 0.4.0
+Version: 0.5.0
 Last Updated: 2026-06-10
+
+> **Auth model:** This app is embedded inside a host website that owns authentication. SPOTS does NOT ship its own login UI. The host site is responsible for establishing a Supabase session (JWT) and forwarding it to the embed; SPOTS only consumes `auth.uid()` for RLS. All "Auth (login/signup)" deliverables are therefore out of scope; studio scoping still flows through `user_studios` + `has_studio_access()`.
 
 Legend — Status: `todo` | `in-progress` | `done` | `blocked` · Owner: `Lovable` | `User` | `Both` · Tags: `[dep]` dependency-linked (sorted first), `[del]` deliverable (sorted last).
 
@@ -60,7 +62,9 @@ Goal: read what SPOTS produces and describe what it does — not duplicate it. M
 
 ## Phase 8 — Web UI
 
-- [ ] **[dep]** Auth (Lovable Cloud) + studio selector · Owner: Lovable · Status: todo · QA: login restricts visible studios per `user_studios`.
+- [x] **[dep]** Landing surface — main screen scaffold at `/` mirroring SPOTS three-panel layout (Customer Info / Session Overview / Order Overview) · Owner: Lovable · Status: done · QA: page renders at `/` with all three panels visible.
+- [ ] ~~Auth (login UI)~~ — **out of scope.** Host site provides the Supabase session. SPOTS reads `auth.uid()` only.
+- [ ] **[dep]** Studio selector (reads `user_studios` for current session) · Owner: Lovable · Status: todo · QA: dropdown lists only studios the JWT can access.
 - [ ] **[dep]** Media library (grid, search, bulk select) · Owner: Lovable · Status: todo · QA: 1k-image fixture renders ≤2s; search filters live.
 - [ ] **[dep]** Order / Session / Customer screens bound to verified schema · Owner: Lovable · Status: todo · QA: each screen CRUD covered by a screenshot in `docs/spots/qa/`.
 - [ ] **[del]** Visual QA pack — `docs/spots/qa/` · Owner: Both · Status: todo · QA: screenshot per screen, signed-off date in filename.
